@@ -1,0 +1,8 @@
+A.) wrong the answer is z
+B.) Wrong index is out of bounds
+C.) wrong the output is e
+D.) wrong the index 9 exclusive therefore the d of bad would not be included.
+E.) error syntax error
+F.) syntax error
+G.) wrong will return "s vex!"
+H.) correct index out of bounds error
