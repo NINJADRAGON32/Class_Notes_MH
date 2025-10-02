@@ -1,0 +1,24 @@
+
+Propositional Logic
+----translation : "only if"
+---- necesary vs sufficients
+truth assignment: satisfiabkle
+    tautology, contrad.,conting.,
+    equivilance
+Sets 
+    set list notatioon
+    set-builder notation
+    subsets
+    empty set
+    operations: intersection,union,--,complement
+
+universal vs existential claims
+    how to prove/disprove
+    vacuous universal claims
+proof
+    universal intro 
+    application 
+    pf by contradiction
+    pf by cases 
+    Constrained proofs
+
