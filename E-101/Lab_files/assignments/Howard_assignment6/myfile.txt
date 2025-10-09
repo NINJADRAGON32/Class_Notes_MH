@@ -1,0 +1,6 @@
+cows
+pigs
+dogs
+birds
+cats
+chickens
