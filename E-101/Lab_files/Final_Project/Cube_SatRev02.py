@@ -3,6 +3,8 @@
 
 # Imports and Globals
 import random as r
+from sense_hat import SenseHat
+sense = SenseHat
 # ________________________________________________________________________________________
 players = []
 difficulty_colors=["red","orange","green","yellow"]
@@ -33,6 +35,10 @@ def grabbing_players(ui):
     """
         WARNING: will likely be modified or changed entirely for raspberry pi
     """
+    sense.show_message("How many players!!", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])
+    players = [
+        '1': 
+    ]
     ui = str(input("Please input player names and when you are done type q: "))
     while ui != "q": 
         players.append(ui)
@@ -62,6 +68,5 @@ while gamestate==1:
     ui = str(input("did you win?(y/n): "))
     if ui == "y":
         gamestate=0
-
 
 
