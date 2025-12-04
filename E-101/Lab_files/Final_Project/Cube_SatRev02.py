@@ -7,10 +7,97 @@ from sense_hat import SenseHat
 sense = SenseHat
 # ________________________________________________________________________________________
 players = []
-difficulty_colors=["red","orange","green","yellow"]
+difficulty_colors=["R","O","G","Y"]
 ui = "" 
 gamestate = 0
 index = 0
+R = (150, 0, 0)
+Y = (255,255,0)
+G = (0,255,0)
+O = (255,165,0)
+W = (255, 255, 255)
+E = (0, 0, 0)
+
+one = [
+E,E,E,E,E,E,E,E,
+E,E,R,E,E,E,E,E,
+E,E,R,E,E,E,E,E,
+E,E,R,E,E,E,E,E,
+E,E,E,E,E,E,E,E,
+E,E,R,E,E,E,E,E,
+E,E,R,E,E,E,E,E,
+E,E,R,E,E,E,E,E
+]
+two = [
+E,E,E,E,E,E,E,E,
+E,E,R,R,R,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,R,R,E,E,E,
+E,E,R,E,E,E,E,E,
+E,E,R,E,E,E,E,E,
+E,E,R,R,R,R,E,E
+]
+three = [
+E,E,E,E,E,E,E,E,
+E,E,R,R,R,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,R,R,E,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,R,R,R,E,E,E
+]
+four = [
+E,E,E,E,E,E,E,E,
+E,E,R,E,E,R,E,E,
+E,E,R,E,E,R,E,E,
+E,E,R,E,E,R,E,E,
+E,E,R,R,R,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E
+]
+five = [
+E,E,E,E,E,E,E,E,
+E,E,R,R,R,R,E,E,
+E,E,R,E,E,E,E,E,
+E,E,R,E,E,E,E,E,
+E,E,R,R,R,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,R,R,R,R,E,E
+]
+six = [
+E,E,E,E,E,E,E,E,
+E,E,R,R,R,R,E,E,
+E,E,R,E,E,E,E,E,
+E,E,R,E,E,E,E,E,
+E,E,R,R,R,R,E,E,
+E,E,R,E,E,R,E,E,
+E,E,R,E,E,R,E,E,
+E,E,R,R,R,R,E,E
+]
+seven = [
+E,E,E,E,E,E,E,E,
+E,E,R,R,R,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E,
+E,E,E,E,E,R,E,E
+]
+eight = [
+E,E,E,E,E,E,E,E,
+E,E,R,R,R,R,E,E,
+E,E,R,E,E,R,E,E,
+E,E,R,E,E,R,E,E,
+E,E,R,R,R,R,E,E,
+E,E,R,E,E,R,E,E,
+E,E,R,E,E,R,E,E,
+E,E,R,R,R,R,E,E
+]
 #-----------------------------------------------------------------------------------------
 # Functions
 def roll_dice():
@@ -30,23 +117,51 @@ def assign_turn_order(players):
         players.pop(j)
     return (turn_Order)
 
-def grabbing_players(ui):
-    # asks the user for the list  of all the players
-    """
-        WARNING: will likely be modified or changed entirely for raspberry pi
-    """
+def grabbing_players():
+    # asks the user for the correct number of players up until 4
+    num_players = 1
     sense.show_message("How many players!!", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])
-    players = [
-        '1': 
-    ]
-    ui = str(input("Please input player names and when you are done type q: "))
-    while ui != "q": 
-        players.append(ui)
-        ui = str(input("Please input player names and when you are done type q: "))
+    event = sense.stick.wait_for_event()
+    while event.direction != 'middle' and event.action != 'pressed':
+        if num_players==1:
+            sense.set_pixels(one)
+        elif num_players==2:
+            sense.set_pixels(two)
+        elif num_players==3:
+            sense.set_pixels(three)
+        elif num_players==4:
+            sense.set_pixels(four)
+        if event.direction == 'up':
+            if num_players == 4:
+                num_players=1
+            else:
+                num_players+=1
+        elif event.direction =='down':
+            if num_players == 1:
+                num_players=4
+            else: 
+                num_players-=1
+
+def turn():
+    roll = roll_dice()
+    color = assign_color()
+    if roll==1:
+
+        sense.set_pixels(one)
+    elif roll==2:
+        sense.set_pixels(two)
+    elif roll==3:
+        sense.set_pixels(three)
+    elif roll==4:
+        sense.set_pixels(four)
+
+
+
+    return ()
 
 # main ---------------------------------------------------------------------------------
 
-grabbing_players(ui)
+grabbing_players()
 t_o = assign_turn_order(players)
 print(f"Here is our turn order: {t_o}")
 print(f"Starting game!!!!")
