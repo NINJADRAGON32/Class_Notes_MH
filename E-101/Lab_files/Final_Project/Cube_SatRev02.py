@@ -5,6 +5,7 @@
 import random as r
 from sense_hat import SenseHat
 sense = SenseHat
+from time import sleep
 # ________________________________________________________________________________________
 players = []
 difficulty_colors=["R","O","G","Y"]
@@ -143,10 +144,21 @@ def grabbing_players():
                 num_players-=1
 
 def turn():
+    # this funtion programs the turn order per player
     roll = roll_dice()
-    color = assign_color()
+    C = assign_color()
+    sense.set_pixels([
+    C,C,C,C,C,C,C,C,
+    C,C,C,C,C,C,C,C,
+    C,C,C,C,C,C,C,C,
+    C,C,C,C,C,C,C,C,
+    C,C,C,C,C,C,C,C,
+    C,C,C,C,C,C,C,C,
+    C,C,C,C,C,C,C,C,
+    C,C,C,C,C,C,C,C
+    ])
+    sleep(4)
     if roll==1:
-
         sense.set_pixels(one)
     elif roll==2:
         sense.set_pixels(two)
@@ -154,10 +166,16 @@ def turn():
         sense.set_pixels(three)
     elif roll==4:
         sense.set_pixels(four)
-
-
-
-    return ()
+    elif roll==5:
+        sense.set_pixels(five)
+    elif roll==6:
+        sense.set_pixels(six)
+    elif roll==7:
+        sense.set_pixels(seven)
+    elif roll==8:
+        sense.set_pixels(eight)
+    
+    return
 
 # main ---------------------------------------------------------------------------------
 
