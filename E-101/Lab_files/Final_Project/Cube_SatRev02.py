@@ -177,6 +177,9 @@ def take_turn(p):
         sense.set_pixels(seven)
     elif roll==8:
         sense.set_pixels(eight)
+    event = sense.stick.wait_for_event()
+    while not (event.direction == 'middle' and event.action == 'pressed'):
+        sense.show_message("click to end your turn!!", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])
     return
 
 # main ---------------------------------------------------------------------------------
@@ -191,34 +194,25 @@ while gamestate == 1:
         sense.show_message("Did u win? up-yes down-no", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])
         event = sense.stick.wait_for_event()
         if event.direction == 'up': 
-            gamestate == 0
+            gamestate = 0
+            sense.show_message(f"Congratulations, player {p} wins!!!!!", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])
+            break
+        elif event.direction =='down':
+            gamestate =1
+    if p==4:
+        p=1
+    else:
+        p+=1
+    turn +=1
+
+
+            
 
     
 
 
 
 
-# grabbing_players()
-# t_o = assign_turn_order(players)
-# print(f"Here is our turn order: {t_o}")
-# print(f"Starting game!!!!")
-# gamestate=1
-# while gamestate==1:
-#     print(f"it's {t_o[index]}'s turn")
-#     ui = str(input("press (r) to roll the dice and get your card color. "))
-#     roll = roll_dice()
-#     print(f"you rolled a {roll} and your card color is {assign_color()}")
-#     ui = str(input("Did you get the question right?(y/n): "))
-#     if ui =="y":
-#         print(f"AWESOME move forward {roll} spaces")
-#     else: 
-#         print("you suck haha loserrrr!!!!!!!!!!!")
-#     if index == (len(t_o)-1):
-#         index = 0
-#     else:
-#         index = index+1
-#     ui = str(input("did you win?(y/n): "))
-#     if ui == "y":
-#         gamestate=0
+
 
 
