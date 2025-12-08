@@ -183,7 +183,7 @@ def take_turn(p):
     return
 
 # main ---------------------------------------------------------------------------------
-grabbing_players()
+total_players = grabbing_players()
 sense.show_message("Starting Game", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])
 gamestate=1
 p = 1
@@ -195,15 +195,19 @@ while gamestate == 1:
         event = sense.stick.wait_for_event()
         if event.direction == 'up': 
             gamestate = 0
-            sense.show_message(f"Congratulations, player {p} wins!!!!!", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])
+            sense.show_message(f"Congratulations, player {p} wins!!!!!", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [255,255,255])
             break
         elif event.direction =='down':
             gamestate =1
-    if p==4:
+    if p==total_players:
         p=1
     else:
         p+=1
     turn +=1
+    
+event = sense.stick.wait_for_event()
+while not (event.direction == 'middle' and event.action == 'pressed'):
+    sense.show_message(f"Congratulations, player {p-1} wins!!!", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [255,255,255])
 
 
             
