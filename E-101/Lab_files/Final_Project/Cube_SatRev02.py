@@ -134,12 +134,13 @@ def grabbing_players():
         elif num_players == 4:
             sense.set_pixels(four)
         event = sense.stick.wait_for_event()
-        if event.direction == 'up':
-            num_players = 1 if num_players == 4 else num_players + 1
-            sleep(2)
-        elif event.direction == 'down':
-            num_players = 4 if num_players == 1 else num_players - 1
-            sleep(2)
+        if event.action == "pressed":
+            if event.direction == 'up':
+                num_players = 1 if num_players == 4 else num_players + 1
+                sleep(2)
+            elif event.direction == 'down':
+                num_players = 4 if num_players == 1 else num_players - 1
+                sleep(2)
     return (num_players)
 
 def take_turn(p):
@@ -198,7 +199,7 @@ while gamestate == 1:
     if turn>=5:
         sense.show_message("Did u win? up-yes down-no", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])
         event = sense.stick.wait_for_event()
-        if event.direction == 'up': 
+        if event.direction == 'up' and event.action=="pressed": 
             gamestate = 0
             sense.show_message(f"Congratulations, player {p} wins!!!!!", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [255,255,255])
             break
