@@ -8,7 +8,6 @@ sense = SenseHat()
 from time import sleep
 # ________________________________________________________________________________________
 players = []
-difficulty_colors=["R","O","G","Y"]
 ui = "" 
 gamestate = 0
 index = 0
@@ -18,6 +17,7 @@ G = (0,255,0)
 O = (255,165,0)
 W = (255, 255, 255)
 E = (0, 0, 0)
+difficulty_colors=[R,G,Y]
 
 one = [
 E,E,E,E,E,E,E,E,
@@ -133,19 +133,22 @@ def grabbing_players():
             sense.set_pixels(three)
         elif num_players == 4:
             sense.set_pixels(four)
-
-        event = sense.stick.wait_for_event()  
+        event = sense.stick.wait_for_event()
         if event.direction == 'up':
             num_players = 1 if num_players == 4 else num_players + 1
+            sleep(2)
         elif event.direction == 'down':
             num_players = 4 if num_players == 1 else num_players - 1
+            sleep(2)
     return (num_players)
 
 def take_turn(p):
     # this funtion programs the turn order per player
-    event = sense.stick.wait_for_event()
-    while not (event.direction == 'middle' and event.action == 'pressed'):
-        sense.show_message(f"Player {p}'s turn  ", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])
+    while True:
+        event = sense.stick.wait_for_event()
+        if event.direction == 'middle' and event.action == 'pressed':
+            break
+        sense.show_message(f"Player {p}'s turn  ", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])    
     roll = roll_dice()
     C = assign_color()
     sense.clear()
@@ -160,7 +163,6 @@ def take_turn(p):
     C,C,C,C,C,C,C,C
     ])
     sleep(4)
-    sense.clear()
     if roll==1:
         sense.set_pixels(one)
     elif roll==2:
@@ -177,9 +179,12 @@ def take_turn(p):
         sense.set_pixels(seven)
     elif roll==8:
         sense.set_pixels(eight)
-    event = sense.stick.wait_for_event()
-    while not (event.direction == 'middle' and event.action == 'pressed'):
-        sense.show_message("click to end your turn!!", scroll_speed = 0.05,text_colour = [139,0,0], back_colour = [0,0,0])
+    sleep(4)
+    while True:
+        event = sense.stick.wait_for_event()
+        if event.direction == 'middle' and event.action == 'pressed':
+            break
+        sense.show_message("click to end your turn!!", scroll_speed=0.05,text_colour=[139,0,0], back_colour=[0,0,0])
     return
 
 # main ---------------------------------------------------------------------------------
